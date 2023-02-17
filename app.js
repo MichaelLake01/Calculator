@@ -15,7 +15,7 @@ function createNumPad()
 {  
     for (let i = 0; i < 10; i++) {
         const num = document.createElement("button");
-        num.classList = ["num", `num${i}`];
+        num.classList.add("num", `num${i}`);
         num.textContent = i;
         numPad.append(num);
     }
@@ -26,7 +26,7 @@ function createOperands()
     const operands = ["+", "-", "*", "/"];
     for (let i = 0; i < operands.length; i++) {
         const operand = document.createElement("button");
-        operand.classList = ["operand", operands[i]];
+        operand.classList.add("operand", operands[i]);
         operand.textContent = operands[i];
         operandContainer.append(operand);
     }
