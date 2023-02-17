@@ -118,8 +118,13 @@ buttons.forEach(button => {
     else
     {
         const displayValue = calcOutput.value;
-        console.log(displayValue);
-        calcOutput.value = evaluateExpression(displayValue);
+       
+        if(displayValue.length != 0)
+        {
+            console.log(displayValue);
+            calcOutput.value = evaluateExpression(displayValue);
+        }
+       
     }
 
   });
