@@ -18,6 +18,8 @@ function innit()
 
 function createNumPad()
 {  
+    numPad.className = "num-pad";
+
     for (let i = 0; i < 10; i++) {
         const num = document.createElement("button");
         num.classList.add("num", `num${i}`);
@@ -34,11 +36,12 @@ function createNumPad()
     numPad.append(equal);
     numPad.append(clear);
 
-    numPad.className = "num-pad";
 }
 
 function createOperands()
 {
+    operandContainer.className = "operand-container";
+
     const operands = ["+", "-", "*", "/"];
     for (let i = 0; i < operands.length; i++) {
         const operand = document.createElement("button");
@@ -47,7 +50,6 @@ function createOperands()
         operandContainer.append(operand);
     }
 
-    operandContainer.className = "operand-container";
 }
 
 
