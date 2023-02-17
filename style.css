@@ -4,25 +4,49 @@
     padding: 0;
 }
 
+body
+{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+
+}
+
+h1
+{
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+
+}
 
 #calc-container
 {
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     gap: 20px;
+    padding: 32px;
+    background-color: black;
+    width: 250px;
+
 }
 
-#calc-btns
+input
+{
+}
+
+
+.calc-btns
 {
     display: flex;
-    flex-direction: column;
- 
 }
 
-.num, .operand
+
+
+.num, .pad-item, .operand
 {
     width: 50px;
     height: 50px;

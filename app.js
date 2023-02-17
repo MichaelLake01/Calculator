@@ -1,14 +1,19 @@
 const calContainer = document.querySelector("#calc-container");
-const numPad = document.querySelector("#num-pad");
-const operandContainer= document.querySelector("#operand-container");
-const optionsContainer = document.querySelector("#options-container");
+const calcButtons = document.createElement("div");
+const numPad = document.createElement("div");
+const operandContainer= document.createElement("div");
 
 innit();
 
 function innit()
 {
+    calcButtons.className = "calc-btns";
+    calContainer.append(calcButtons);
     createNumPad();
     createOperands();
+    calcButtons.append(numPad);
+    calcButtons.append(operandContainer);
+
 }
 
 function createNumPad()
@@ -19,6 +24,17 @@ function createNumPad()
         num.textContent = i;
         numPad.append(num);
     }
+
+    const equal = document.createElement("button");
+    const clear = document.createElement("button");
+    equal.classList.add("pad-item", "equal");
+    clear.classList.add("pad-item", "clear");
+    equal.textContent = "=";
+    clear.textContent = "clear";
+    numPad.append(equal);
+    numPad.append(clear);
+
+    numPad.className = "num-pad";
 }
 
 function createOperands()
@@ -30,6 +46,8 @@ function createOperands()
         operand.textContent = operands[i];
         operandContainer.append(operand);
     }
+
+    operandContainer.className = "operand-container";
 }
 
 
