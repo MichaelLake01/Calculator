@@ -1,21 +1,50 @@
 const calContainer = document.querySelector("#calc-container");
 const calcOutput = document.querySelector("#calc-output");
-const calcButtons = document.createElement("div");
+const calcButtons = document.querySelector("#calc-buttons");
+const bottomButtons = document.createElement("div");
 const numPad = document.createElement("div");
-const operandContainer= document.createElement("div");
+const operandContainer = document.createElement("div");
+const options = document.createElement("div");
+
 
 innit();
 
 function innit()
 {
-    calcButtons.className = "calc-btns";
-    calContainer.append(calcButtons);
+    bottomButtons.className = "bot-buttons"
+    createOptions();
     createNumPad();
-    createOperands();
-    calcButtons.append(numPad);
-    calcButtons.append(operandContainer);
+    createBasicOperands();
+    bottomButtons.append(numPad);
+    bottomButtons.append(operandContainer);
+    calcButtons.append(options);
+    calcButtons.append(bottomButtons);
+}
+
+function createOptions()
+{
+    options.className = "option-buttons";
+    const clear = document.createElement("button");
+    const backSpace = document.createElement("button");
+    const parenthesisLeft = document.createElement("button");
+    const parenthesisRight = document.createElement("button");
+    const module = document.createElement("button");
+
+    clear.textContent = "AC";
+    backSpace.textContent = "DEL";
+    parenthesisLeft.textContent = "(";
+    parenthesisRight.textContent = ")";
+    module.textContent = "%";
+
+    options.append(clear);
+    options.append(backSpace);
+    options.append(parenthesisLeft);
+    options.append(parenthesisRight);
+    options.append(module);
+
 
 }
+
 
 function createNumPad()
 {  
@@ -28,18 +57,18 @@ function createNumPad()
         numPad.append(num);
     }
 
-    const equal = document.createElement("button");
-    const clear = document.createElement("button");
-    equal.classList.add("pad-item", "equal");
-    clear.classList.add("pad-item", "clear");
-    equal.textContent = "=";
-    clear.textContent = "clear";
-    numPad.append(equal);
-    numPad.append(clear);
+    const dot = document.createElement("button");
+    const equals = document.createElement("button")
+    equals.classList.add("pad-item", "equal")
+    dot.classList.add("pad-item", "dot");
+    equals.textContent = "=";
+    dot.textContent = ".";
+    numPad.append(dot);
+    numPad.append(equals)
 
 }
 
-function createOperands()
+function createBasicOperands()
 {
     operandContainer.className = "operand-container";
 
@@ -130,7 +159,10 @@ buttons.forEach(button => {
   });
 
 
-});function evaluateExpression(expression) 
+});
+
+
+function evaluateExpression(expression) 
 {
 
     const tokens = expression.match(/(\d+|\+|\-|\*|\/|\^|\(|\))/g);
@@ -159,4 +191,4 @@ buttons.forEach(button => {
       }
     
       return result;
-}
+}   
