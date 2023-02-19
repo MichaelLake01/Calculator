@@ -181,6 +181,25 @@ function evaluateExpression(expression)
 
     const tokens = expression.match(/(\d+|\+|\-|\%|\*|\/|\^|\(|\))/g);
 
+    for (let i = 0;  i < tokens.length; i++) {
+        if (tokens[i] === '(') {
+            let parenCount = 1;
+            let next = i + 1;
+            while (parenCount > 0 && next < tokens.length) {
+                if (tokens[next] === '(') {
+                    parenCount++;
+                } else if (tokens[next] === ')') {
+                    parenCount--;
+                }
+                next++;
+            }
+            const subExpression = tokens.slice(i + 1, next - 1);
+            const subResult = evaluateExpression(subExpression.join(' '));
+            tokens.splice(i, next - i, subResult);
+          }
+    }
+   
+
     evaluateOperator(tokens, '*');
     evaluateOperator(tokens, '/');
     evaluateOperator(tokens, '%');

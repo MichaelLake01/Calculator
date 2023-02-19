@@ -33,7 +33,8 @@ input
 {
     height: 75px;
     font-size: 24px;
-    overflow-x: scroll;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
 }
 
