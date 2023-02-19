@@ -153,10 +153,13 @@ const buttons = document.querySelectorAll("button");
 buttons.forEach(button => {
   button.addEventListener("click", () => {
     
+    // Replace NaN value if a button is pressed
+    if(calcOutput.value === "NaN"){calcOutput.value = null;}
 
     if(button.textContent === "AC")
     {
         calcOutput.value = "";
+        
     }
     // Delete last value with slice
     else if(button.textContent === "DEL")
