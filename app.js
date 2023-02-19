@@ -108,6 +108,11 @@ function divide(num1,num2)
 
 }
 
+function module(num1,num2)
+{
+    return num1 % num2;
+}
+
 function operate(num1, operator, num2)
 {
     switch (operator) {
@@ -123,6 +128,9 @@ function operate(num1, operator, num2)
         case "/":
             return divide(num1,num2);
             break;
+        case "%":
+            return module(num1,num2);
+            break;
         default:
             break;
     }
@@ -136,9 +144,15 @@ buttons.forEach(button => {
   button.addEventListener("click", () => {
     
 
-    if(button.textContent === "clear")
+    if(button.textContent === "AC")
     {
         calcOutput.value = "";
+    }
+    else if(button.textContent === "DEL")
+    {
+        const currentValue = calcOutput.value;
+        const newValue = currentValue.slice(0, -1);
+        calcOutput.value = newValue;   
     }
     else if(button.textContent !== "=")
     {
@@ -165,30 +179,35 @@ buttons.forEach(button => {
 function evaluateExpression(expression) 
 {
 
-    const tokens = expression.match(/(\d+|\+|\-|\*|\/|\^|\(|\))/g);
-    for (let i = 0; i < tokens.length; i++) {
-        if (tokens[i] === '*') {
-          const left = Number(tokens[i - 1]);
-          const right = Number(tokens[i + 1]);
-          const result = operate(left,"*",right)
-          tokens.splice(i - 1, 3, result);
-          i--;
-        } else if (tokens[i] === '/') {
-          const left = Number(tokens[i - 1]);
-          const right = Number(tokens[i + 1]);
-          const result = operate(left,"/",right)
-          tokens.splice(i - 1, 3, result);
-          i--;
-        }
-      }
-      let result = Number(tokens[0]);
-      for (let i = 1; i < tokens.length; i += 2) {
+    const tokens = expression.match(/(\d+|\+|\-|\%|\*|\/|\^|\(|\))/g);
+
+    evaluateOperator(tokens, '*');
+    evaluateOperator(tokens, '/');
+    evaluateOperator(tokens, '%');
+
+    let result = Number(tokens[0]);
+    for (let i = 1; i < tokens.length; i += 2) {
         if (tokens[i] === '+') {
-          result = operate(result, "+", Number(tokens[i + 1]));
+            result = operate(result, "+", Number(tokens[i + 1]));
         } else if (tokens[i] === '-') {
-          result = operate(result, "-", Number(tokens[i + 1]));
+            result = operate(result, "-", Number(tokens[i + 1]));
         }
-      }
-    
-      return result;
+    }
+
+    return result;
 }   
+
+
+function evaluateOperator(tokens, operator) {
+    for (let i = 0; i < tokens.length; i++) {
+      if (tokens[i] === operator) {
+        const left = Number(tokens[i - 1]);
+        const right = Number(tokens[i + 1]);
+        const result = operate(left, operator, right);
+        tokens.splice(i - 1, 3, result);
+        i--;
+      }
+    }
+  }
+  
+  
