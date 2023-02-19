@@ -23,9 +23,10 @@ body
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 32px;
-    background-color: black;
+    padding: 42px;
+    background-color: #282828;
     width: 500px;
+    border-radius: 10%;
 
 }
 

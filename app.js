@@ -178,7 +178,14 @@ buttons.forEach(button => {
         // If not empty
         if(displayValue.length != 0)
         {
-            calcOutput.value = evaluateExpression(displayValue);
+            try {
+                calcOutput.value = evaluateExpression(displayValue);
+
+            } 
+            catch (error) {
+                calcOutput.value = NaN;
+            }
+          
         }
        
     }
@@ -194,8 +201,15 @@ function evaluateExpression(expression)
 
     // Find any digits, +, -, %, *, /, ( and )
     // Store in an array as characters
-    const tokens = expression.match(/(\d+|\+|\-|\%|\*|\/|\^|\(|\))/g);
+    const tokens = expression.match(/(\d+\.?\d*|\+|\-|\%|\*|\/|\^|\(|\))/g);
 
+    // Checks wether the input has consecutive operators
+    if(hasConsecutiveOperators(tokens)){return NaN}
+
+    // Checks the the expression has at least one operator
+    if(!tokens.some(token => /[-+*\/%^]/g.test(token))){return NaN}
+
+    console.log(tokens);
     // Loop over the characters
     for (let i = 0;  i < tokens.length; i++) {
         // If character is equal to starting parenthesis
@@ -220,11 +234,11 @@ function evaluateExpression(expression)
             }
             // Get the expression between the two parenthesis
             // i is equal to the starting parenthesis
-            // deduct 1 from next as we have already added 1 to next at the end of the while loop.
+            // deduct 1 from next as we have already added 1 to next at the end of the while loop
             const subExpression = tokens.slice(i + 1, next - 1); // (inclusive, exclusive)
-            // Recursively run evaluateExpression and join the subExpression so it can be evaluated by the regex.
+            // Recursively run evaluateExpression and join the subExpression so it can be evaluated by the regex
             const subResult = evaluateExpression(subExpression.join(' '));
-            // Replace the expression between the parenthesis, including the two parenthesis, with the result.
+            // Replace the expression between the parenthesis, including the two parenthesis, with the result
             tokens.splice(i, next - i, subResult);
           }
     }
@@ -248,6 +262,9 @@ function evaluateExpression(expression)
             result = operate(result, "-", Number(tokens[i + 1])); // => result -= nextNum
         }
     }
+
+
+    
 
     return result;
 }   
@@ -274,4 +291,17 @@ function evaluateOperator(tokens, operator) {
     }
   }
   
-  
+function hasConsecutiveOperators(tokens) {
+    for (let i = 1; i < tokens.length; i++) {
+        if (isOperator(tokens[i]) && isOperator(tokens[i - 1])) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
+function isOperator(token) {
+    return token.match(/[\+\-\*\/\^]/) !== null;
+}
